@@ -1,21 +1,8 @@
 <?php
 
-// ------ DB CONNECT ------ \\
+require_once __DIR__.DIRECTORY_SEPARATOR.'common.php';
 
-require_once __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'services'.DIRECTORY_SEPARATOR.'dba.php';
-
-$dba = new dba();
-$dba->dba();
-$pdo = $dba->_db;
-
-// ------ FETCH LAST LAUNCHED MATCH ------ \\
-
-$stmt = $pdo->query('SELECT
-  mtch_num AS num,
-  mtch_court as court
-FROM bdnet_matchs ORDER BY mtch_begin DESC LIMIT 1', PDO::FETCH_ASSOC);
-
-$match = $stmt->fetch();
+$match = getLastMatch();
 
 if (!$match) {
   exit('Pas de match');
